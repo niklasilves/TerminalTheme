@@ -7,5 +7,5 @@ curl -sS https://raw.githubusercontent.com/niklasilves/TerminalTheme/main/starsh
 
 ## Install on windows
 ``` 
-set-executionpolicy Unrestricted ; Invoke-RestMethod https://raw.githubusercontent.com/niklasilves/TerminalTheme/main/starship/Configure-TerminalStarship.ps1 | Invoke-Expression
+Set-ExecutionPolicy Unrestricted ; Invoke-RestMethod https://raw.githubusercontent.com/niklasilves/TerminalTheme/main/starship/Configure-TerminalStarship.ps1 | Invoke-Expression
 ```
