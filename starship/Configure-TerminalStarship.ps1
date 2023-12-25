@@ -49,4 +49,5 @@ Add-Content -Path $PROFILE -Value '. "$env:USERPROFILE\.config\powershell\user_p
 Invoke-WebRequest -Uri https://raw.githubusercontent.com/niklasilves/TerminalTheme/main/starship/.starship/starship.toml -OutFile "$Env:USERPROFILE\.starship\starship.toml"
 Invoke-WebRequest -Uri https://raw.githubusercontent.com/niklasilves/TerminalTheme/main/starship/.config/user_profile.ps1 -OutFile "$Env:USERPROFILE\.config\powershell\user_profile.ps1" 
 Invoke-WebRequest -Uri https://raw.githubusercontent.com/niklasilves/TerminalTheme/main/starship/.config/user_vsCode_profile.ps1 -OutFile "$Env:USERPROFILE\.config\powershell\user_vsCode_profile.ps1" 
+
 Set-Location $PSScriptRoot
