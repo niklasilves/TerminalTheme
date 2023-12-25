@@ -26,21 +26,18 @@ function InstallNerdFonts {
     ./install.ps1 Hack
 }
 
-function CreateDotFolders {
-    Set-Location  $env:USERPROFILE
-    
-    if(-not (Test-Path("$Env:USERPROFILE\.config"))){
-        New-Item -Path "$Env:USERPROFILE\.config" -ItemType Directory -Verbose
-    }
-    if(-not (Test-Path("$Env:USERPROFILE\.config\powershell"))){
-        New-Item -Path "$Env:USERPROFILE\.config\powershell" -ItemType Directory -Verbose
-    }   
-    if(-not (Test-Path("$Env:USERPROFILE\.starship"))){
-        New-Item -Path "$Env:USERPROFILE\.starship" -ItemType Directory -Verbose
-    }   
+if(-not (Test-Path("$Env:USERPROFILE\.config"))){
+    New-Item -Path "$Env:USERPROFILE\.config" -ItemType Directory -Verbose
 }
-CreateDotFolders
+if(-not (Test-Path("$Env:USERPROFILE\.config\powershell"))){
+    New-Item -Path "$Env:USERPROFILE\.config\powershell" -ItemType Directory -Verbose
+}   
+if(-not (Test-Path("$Env:USERPROFILE\.starship"))){
+    New-Item -Path "$Env:USERPROFILE\.starship" -ItemType Directory -Verbose
+}   
+
 New-Item $PROFILE -Force 
+
 Add-Content -Path $PROFILE -Value '[System.Console]::OutputEncoding = [System.Text.Encoding]::ASCII'
 Add-Content -Path $PROFILE -Value '$ENV:STARSHIP_CONFIG = "$HOME\.starship\starship.toml"'
 Add-Content -Path $PROFILE -Value 'Invoke-Expression (&starship init powershell)'
