@@ -1,17 +1,4 @@
-function InstallAppsWinget {
-    $Apps = 'Microsoft.PowerShell','git.git','Microsoft.VisualStudioCode','Microsoft.WindowsTerminal','starship'
-    $apps | Foreach-Object { winget install $_ }
-}
-
-function InstallModules{
-    Install-Module -Name z -Force -Scope CurrentUser -AllowClobber -Verbose
-    Install-module -Name PSReadLine -MinimumVersion 2.2.5 -Scope CurrentUser -Force -SkipPublisherCheck -Verbose
-    #Install-module -Name posh-git -Force -Scope CurrentUser -Verbose
-    Install-Module -Name PSSecretScanner -Force -Scope CurrentUser -Verbose
-    Install-Module -Name InvokeBuild -Force -Scope CurrentUser -Verbose
-    Install-Module -Name platyPS -Force -Scope CurrentUser -Verbose
-}
-
+winget install starship
 function InstallNerdFonts {
     Set-Location  $env:USERPROFILE
     #Download Nerd Fonts , only root
@@ -24,6 +11,13 @@ function InstallNerdFonts {
     
     #Install Hack font
     ./install.ps1 Hack
+}
+
+[ValidateSet('Yes','No')]
+$InstallPrompt = Read-Host -Prompt "Is Nerdfont already installed?"
+
+if ($InstallPrompt -eq 'Yes') {
+    InstallNerdFonts
 }
 
 if(-not (Test-Path("$Env:USERPROFILE\.config"))){
