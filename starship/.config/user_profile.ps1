@@ -1,8 +1,6 @@
-#cd C:\_data\.DevOps\AzDevOps\
 #User Profile
 
 #Load Prompt config
-$GitPromptSettings.DefaultPromptBeforeSuffix.Text = ' $(Write-SecretStatus)'
 Import-Module -Name PSReadLine
 
 Set-PSReadLineOption -PredictionSource History

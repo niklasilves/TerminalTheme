@@ -1,14 +1,10 @@
+#User Profile
+
 #Load Prompt config
-Import-Module posh-git
-$GitPromptSettings.DefaultPromptBeforeSuffix.Text = ' $(Write-SecretStatus)'
-#Import-Module -Name PSReadLine
+Import-Module -Name PSReadLine
 
 Set-PSReadLineOption -PredictionSource History
 Set-PSReadLineOption -PredictionViewStyle ListView
-
-function Get-ScriptDirectory { split-path $MyInvocation.ScriptName}
-#$PROMPT_CONFIG = Join-Path (Get-ScriptDirectory) 'ilves_VSCode.omp.json'
-#oh-my-posh init pwsh --config $PROMPT_CONFIG | Invoke-Expression
 
 # Alias
 Set-Alias vim nvim
