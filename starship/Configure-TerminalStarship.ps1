@@ -6,17 +6,19 @@ function InstallNerdFonts {
     
     Set-Location $env:USERPROFILE\nerd-fonts
     
-    #Download CascadiaCode font
+    #Download Hack font
     git sparse-checkout add patched-fonts/Hack
     
     #Install Hack font
     ./install.ps1 Hack
 }
 
-[ValidateSet('Yes','No')]
-$InstallPrompt = Read-Host -Prompt "Is Nerdfont already installed?"
+$title = 'Confirm'
+$question = 'Do you want to install Hack Nerd Font?'
+$choices = '&Yes', '&No'
 
-if ($InstallPrompt -eq 'Yes') {
+$decision = $Host.UI.PromptForChoice($title, $question, $choices, 1)
+if ($decision -eq 0) {
     InstallNerdFonts
 }
 
