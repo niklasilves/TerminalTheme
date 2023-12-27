@@ -44,3 +44,28 @@ Invoke-WebRequest -Uri https://raw.githubusercontent.com/niklasilves/TerminalThe
 Invoke-WebRequest -Uri https://raw.githubusercontent.com/niklasilves/TerminalTheme/main/starship/.config/user_vsCode_profile.ps1 -OutFile "$Env:USERPROFILE\.config\powershell\user_vsCode_profile.ps1" 
 
 Set-Location $PSScriptRoot
+
+## Fix font and background of Terminal ##
+$font = "Hack Nerd Font Mono"
+$file = "$Env:USERPROFILE\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
+#$bgPathNormal = "$Env:USERPROFILE\.config\powershell\TerminalBackground.jpg"
+#$bgPath = $bgPathNormal.Replace("\","\\")
+
+$default_regex = '(?<="defaults": {},)'
+if((Get-Content $file) -match $default_regex){
+    $default_regex_replace = '(?<="defaults": )[^"]*'
+    (Get-Content $file) -replace $default_regex_replace, "`n`t`t{`n`t`t`t$([char]34)font$([char]34):`n`t`t`t{`n`t`t`t`t$([char]34)face$([char]34): $([char]34)$font$([char]34)`n`t`t`t},`n`t`t`t$([char]34)backgroundImage$([char]34): $([char]34)$bgPath$([char]34)`n`t`t}," | Set-Content $file
+}else{
+    $Font_regex = '(?<="font":)'
+    #Replace fonts
+    if((Get-Content $file) -match $Font_regex) {
+        Write-Verbose -Message "Found font" 
+        $Face_regex = '(?<="face":)'
+        #Replace face
+        if((Get-Content $file) -match $Face_regex){
+            Write-Verbose -Message "Found face" 
+            $Face_regex_Replace = '(?<="face": ")[^"]*'
+            (Get-Content $file) -replace $Face_regex_Replace, $font | Set-Content $file
+        }
+    }
+}
