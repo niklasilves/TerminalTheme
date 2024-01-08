@@ -72,29 +72,29 @@ if((Get-Content $file) -match $default_regex){
     $file = "$Env:USERPROFILE\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
 
     $newColorScheme = @"
-{
-    "background": "#1A1A1A",
-    "black": "#121212",
-    "blue": "#2B4FFF",
-    "brightBlack": "#666666",
-    "brightBlue": "#5C78FF",
-    "brightCyan": "#5AC8FF",
-    "brightGreen": "#905AFF",
-    "brightPurple": "#5EA2FF",
-    "brightRed": "#BA5AFF",
-    "brightWhite": "#FFFFFF",
-    "brightYellow": "#685AFF",
-    "cursorColor": "#FFFFFF",
-    "cyan": "#28B9FF",
-    "foreground": "#F1F1F1",
-    "green": "#7129FF",
-    "name": "xcad",
-    "purple": "#2883FF",
-    "red": "#A52AFF",
-    "selectionBackground": "#FFFFFF",
-    "white": "#F1F1F1",
-    "yellow": "#3D2AFF"
-},
+    {
+        "background": "#1A1A1A",
+        "black": "#121212",
+        "blue": "#2B4FFF",
+        "brightBlack": "#666666",
+        "brightBlue": "#5C78FF",
+        "brightCyan": "#5AC8FF",
+        "brightGreen": "#905AFF",
+        "brightPurple": "#5EA2FF",
+        "brightRed": "#BA5AFF",
+        "brightWhite": "#FFFFFF",
+        "brightYellow": "#685AFF",
+        "cursorColor": "#FFFFFF",
+        "cyan": "#28B9FF",
+        "foreground": "#F1F1F1",
+        "green": "#7129FF",
+        "name": "xcad",
+        "purple": "#2883FF",
+        "red": "#A52AFF",
+        "selectionBackground": "#FFFFFF",
+        "white": "#F1F1F1",
+        "yellow": "#3D2AFF"
+    },
 "@
     $newJsonText_Replace = '(?<=\s*"schemes"\s*:\s*\[)[^{]*'
     $newJsonText = (Get-Content $file -Raw) -replace $newJsonText_Replace, "`n`t`t$newColorScheme"
