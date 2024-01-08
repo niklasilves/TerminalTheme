@@ -69,8 +69,9 @@ if((Get-Content $file) -match $default_regex){
         }
     }
 
+    $file = "$Env:USERPROFILE\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
 
-$newColorScheme = @"
+    $newColorScheme = @"
 {
     "background": "#1A1A1A",
     "black": "#121212",
@@ -87,20 +88,17 @@ $newColorScheme = @"
     "cyan": "#28B9FF",
     "foreground": "#F1F1F1",
     "green": "#7129FF",
-    "name": "xcad",
+    "name": "basdf",
     "purple": "#2883FF",
     "red": "#A52AFF",
     "selectionBackground": "#FFFFFF",
     "white": "#F1F1F1",
     "yellow": "#3D2AFF"
-}
+},
 "@
-
-$newJsonText = $file -replace '(?<=\b"schemes"\s*:\s*\[)', "$newColorScheme,"
-
-
-# Spara den uppdaterade JSON-texten till fil
-$newJsonText | Set-Content -Path $file -Force
+    $newJsonText_Replace = '(?<=\s*"schemes"\s*:\s*\[)[^{]*'
+    $newJsonText = (Get-Content $file -Raw) -replace $newJsonText_Replace, "`n`t`t$newColorScheme"
+    $newJsonText | Set-Content -Path $file -Force
 
     $colorScheme = "xcad"
     $colorScheme_regex = '(?<="colorScheme":)'
