@@ -54,7 +54,7 @@ $font = "Hack Nerd Font Mono"
 $default_regex = '(?<="defaults": {},)'
 if((Get-Content $file) -match $default_regex){
     $default_regex_replace = '(?<="defaults": )[^"]*'
-    (Get-Content $file -Raw) -replace $default_regex_replace, "`n`t`t{`n`t`t`t$([char]34)font$([char]34):`n`t`t`t{`n`t`t`t`t$([char]34)face$([char]34): $([char]34)$font$([char]34)`n`t`t`t},`n`t`t`t$([char]34)backgroundImage$([char]34): $([char]34)$bgPath$([char]34)`n`t`t}," | Set-Content $file
+    (Get-Content $file) -replace $default_regex_replace, "`n`t`t{`n`t`t`t$([char]34)font$([char]34):`n`t`t`t{`n`t`t`t`t$([char]34)face$([char]34): $([char]34)$font$([char]34)`n`t`t`t},`n`t`t`t$([char]34)backgroundImage$([char]34): $([char]34)$bgPath$([char]34)`n`t`t}," | Set-Content $file
 }else{
     $Font_regex = '(?<="font":)'
     #Replace fonts
@@ -65,11 +65,9 @@ if((Get-Content $file) -match $default_regex){
         if((Get-Content $file) -match $Face_regex){
             Write-Verbose -Message "Found face" 
             $Face_regex_Replace = '(?<="face": ")[^"]*'
-            (Get-Content $file -Raw) -replace $Face_regex_Replace, $font | Set-Content $file
+            (Get-Content $file) -replace $Face_regex_Replace, $font | Set-Content $file
         }
     }
-
-    $file = "$Env:USERPROFILE\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
 
     $newColorScheme = @"
     {
@@ -102,14 +100,14 @@ if((Get-Content $file) -match $default_regex){
 
     $colorScheme = "xcad"
     $colorScheme_regex = '(?<="colorScheme":)'
-    if((Get-Content $file -Raw) -match $colorScheme_regex) {
+    if((Get-Content $file) -match $colorScheme_regex) {
         Write-Verbose -Message "colorScheme" 
         $colorScheme_regex = '(?<="colorScheme":)'
         #Replace face
         if((Get-Content $file) -match $colorScheme_regex){
             Write-Verbose -Message "colorScheme " 
             $colorScheme_regex_Replace = '(?<="colorScheme": ")[^"]*'
-            (Get-Content $file -Raw) -replace $colorScheme_regex_Replace, $colorScheme | Set-Content $file
+            (Get-Content $file) -replace $colorScheme_regex_Replace, $colorScheme | Set-Content $file
         }
     }
 }
