@@ -96,11 +96,8 @@ $newColorScheme = @"
 }
 "@
 
-$schemesStartIndex = $file.IndexOf('"schemes": [') + 14
-$schemesEndIndex = $file.IndexOf('],', $schemesStartIndex) + 1
+$newJsonText = $file -replace '(?<=\b"schemes"\s*:\s*\[)', "$newColorScheme,"
 
-# Infoga det nya färgschemat i JSON-texten
-$newJsonText = $file.Insert($schemesEndIndex, $newColorScheme)
 
 # Spara den uppdaterade JSON-texten till fil
 $newJsonText | Set-Content -Path $file -Force
