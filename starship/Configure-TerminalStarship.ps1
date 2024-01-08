@@ -88,7 +88,7 @@ if((Get-Content $file) -match $default_regex){
     "cyan": "#28B9FF",
     "foreground": "#F1F1F1",
     "green": "#7129FF",
-    "name": "basdf",
+    "name": "xcad",
     "purple": "#2883FF",
     "red": "#A52AFF",
     "selectionBackground": "#FFFFFF",
