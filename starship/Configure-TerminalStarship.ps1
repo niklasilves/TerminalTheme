@@ -46,11 +46,11 @@ Invoke-WebRequest -Uri https://raw.githubusercontent.com/niklasilves/TerminalThe
 Set-Location $PSScriptRoot
 
 ## Fix font and background of Terminal ##
-$font = "Hack Nerd Font Mono"
 $file = "$Env:USERPROFILE\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
-#$bgPathNormal = "$Env:USERPROFILE\.config\powershell\TerminalBackground.jpg"
-#$bgPath = $bgPathNormal.Replace("\","\\")
+$bgPathNormal = "$Env:USERPROFILE\.config\powershell\TerminalBackground.jpg"
+$bgPath = $bgPathNormal.Replace("\","\\")
 
+$font = "Hack Nerd Font Mono"
 $default_regex = '(?<="defaults": {},)'
 if((Get-Content $file) -match $default_regex){
     $default_regex_replace = '(?<="defaults": )[^"]*'
@@ -66,6 +66,55 @@ if((Get-Content $file) -match $default_regex){
             Write-Verbose -Message "Found face" 
             $Face_regex_Replace = '(?<="face": ")[^"]*'
             (Get-Content $file) -replace $Face_regex_Replace, $font | Set-Content $file
+        }
+    }
+
+
+$newColorScheme = @"
+{
+    "background": "#1A1A1A",
+    "black": "#121212",
+    "blue": "#2B4FFF",
+    "brightBlack": "#666666",
+    "brightBlue": "#5C78FF",
+    "brightCyan": "#5AC8FF",
+    "brightGreen": "#905AFF",
+    "brightPurple": "#5EA2FF",
+    "brightRed": "#BA5AFF",
+    "brightWhite": "#FFFFFF",
+    "brightYellow": "#685AFF",
+    "cursorColor": "#FFFFFF",
+    "cyan": "#28B9FF",
+    "foreground": "#F1F1F1",
+    "green": "#7129FF",
+    "name": "xcad",
+    "purple": "#2883FF",
+    "red": "#A52AFF",
+    "selectionBackground": "#FFFFFF",
+    "white": "#F1F1F1",
+    "yellow": "#3D2AFF"
+}
+"@
+
+$schemesStartIndex = $file.IndexOf('"schemes": [') + 14
+$schemesEndIndex = $file.IndexOf('],', $schemesStartIndex) + 1
+
+# Infoga det nya färgschemat i JSON-texten
+$newJsonText = $file.Insert($schemesEndIndex, $newColorScheme)
+
+# Spara den uppdaterade JSON-texten till fil
+$newJsonText | Set-Content -Path $file -Force
+
+    $colorScheme = "xcad"
+    $colorScheme_regex = '(?<="colorScheme":)'
+    if((Get-Content $file) -match $colorScheme_regex) {
+        Write-Verbose -Message "colorScheme" 
+        $colorScheme_regex = '(?<="colorScheme":)'
+        #Replace face
+        if((Get-Content $file) -match $colorScheme_regex){
+            Write-Verbose -Message "colorScheme " 
+            $colorScheme_regex_Replace = '(?<="colorScheme": ")[^"]*'
+            (Get-Content $file) -replace $colorScheme_regex_Replace, $colorScheme | Set-Content $file
         }
     }
 }
